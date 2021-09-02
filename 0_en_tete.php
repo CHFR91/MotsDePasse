@@ -32,7 +32,7 @@
 
     <nav class="nav nav-inline">
         <ul>
-            <?= ($valeur == 1) ? '<li class="active"' : '<li' ?>><a href="mdpgen.php">Générateur de mots de passe</a></li>
+            <?= ($valeur == 1) ? '<li class="active"' : '<li' ?>><a href="index.php">Générateur de mots de passe</a></li>
             <?= ($valeur == 2) ? '<li class="active"' : '<li' ?>><a href="presentation.php">Au sujet de ce site</a></li>
             <?= ($valeur == 3) ? '<li class="active"' : '<li' ?>><a href="login.php">Gestionnaire de mots de passe</a></li>
             <?php
