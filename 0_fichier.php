@@ -1,12 +1,4 @@
 <?php
-// tests
-
-/*
-id: 1
-christophe.hede@gmail.com
-test
-*/
-
 // constante connexion
 
 define('DB_HOST', 'localhost');
@@ -17,12 +9,18 @@ define('DB_PASSWORD', '20juin02');
 // constante ACTIF (1/0) site avec inscription et ajout de mdp (1) ou non (0)
 define('ACTIF', 1);
 
+// variable expediteur utilisée lors de la création d'un compte user pour l'envoi du lien, du login et du mot de passe
+$expediteur = "admin@generateur.fr";
+
 // génération d'un mdp de 24 caractères
 $mdp = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!-\$_()&*+?%.<>:;.,^=";
 $mdp = substr(str_shuffle($mdp), 0, 24);
 
 // cryptage du mot de passe
-$mdpCrypt = password_hash($mdp, PASSWORD_DEFAULT);
+function mdpCrypt(string $mot)
+{
+    return password_hash($mot, PASSWORD_DEFAULT);
+}
 
 // nettoyage des données reçues (nom + prenom dans la table users)
 

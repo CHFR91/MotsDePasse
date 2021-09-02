@@ -13,9 +13,9 @@ session_start();
                     <input type="email" name="email" id="email" placeholder="Votre email" required>
                 </div>
 
-                <label for="password">Votre mot de passe <span class="color-primaire">*</span> : <span class="color-danger right">!!! N'oubliez pas de noter le mot de passe !!!</span></label>
+                <label for="password">Votre mot de passe <span class="color-primaire">*</span> :</label>
                 <div class="row">
-                    <input type="text" name="password" id="password" value="<?= $mdp ?>" disabled>
+                    <input type="text" name="password" id="password" value="Le mot de passe 'Maître' va être généré automatiquement !!" disabled>
                 </div>
 
                 <label for="prenom">Votre prénom et nom :</label>
@@ -216,6 +216,7 @@ session_start();
     if (isset($_POST['submit'])) {
         $email = $_POST['email'];
         $password = $mdp;
+        $passwordC = mdpCrypt($mdp);
         $nom = nettoyage($_POST['nom']);
         $prenom = nettoyage($_POST['prenom']);
         $pays = $_POST['pays'];
@@ -228,12 +229,47 @@ session_start();
             $dbsite = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASSWORD);
             $dbsite->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-            $connect = $dbsite->prepare("INSERT users SET email='$email', password='$mdpCrypt', prenom='$prenom', nom='$nom', pays='$pays'");
+            $connect = $dbsite->prepare("SELECT * FROM users WHERE email='$email'");
             $connect->execute();
+            $compter = $connect->rowCount();
 
-            echo '<div class="alert alert--success">';
-            echo 'Votre compte est bien créé, <a href="login.php">vous pouvez vous connecter</a>.';
-            echo '</div>';
+            if ($compter == 1) {
+                // vérification de l'email (si c'est égal à 1, il y a déjà un compte)
+
+                erreur('Vous avez déjà un compte avec cet email !');
+            } else {
+
+                $connect2 = $dbsite->prepare("INSERT users SET email='$email', password='$passwordC', prenom='$prenom', nom='$nom', pays='$pays'");
+                $connect2->execute();
+
+                //envoie de mail avec entête
+
+                $sujet = "Gestionnaire de mots de passe";
+                $message = "\n\n
+Voici les éléments pour vous connecter au Gestionnaire de mots de passe :\n
+\n
+URL : http://localhost:3000/login.php\n
+\n
+login : $email\n
+mot de passe : $password\n
+\n
+!! Attention, gardez bien ce mot de passe sous le coude, il n'est pas possible de le retrouver autrement.\n
+\n
+Merci.\n
+\n
+";
+
+                $entete = "From: $expediteur \n"; // expéditeur
+                $entete .= "Cc:\n";
+                $entete .= "Reply-To: $expediteur \n"; // Adresse de retour
+                $entete .= "X-Mailer: PHP/" . phpversion() . "\n"; //version
+                $entete .= "Date: " . date("D, j M Y H:i:s"); //date;
+                mail($email, $sujet, $message, $entete);
+
+                echo '<div class="alert alert--success">';
+                echo 'Votre compte est bien créé et votre mot de passe est : <strong>' . $password . '</strong>';
+                echo '</div>';
+            }
         }
     }
     ?>

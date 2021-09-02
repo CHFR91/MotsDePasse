@@ -9,9 +9,12 @@ session_start();
     <?php
     if (isset($_SESSION['identifiant'])) {
 
-        $myfile = fopen("data.txt", "w") or die("Unable to open file!");
         $user = $_SESSION['identifiant'];
         $key = idEmail($_SESSION['identifiant']);
+
+        $partie = date("Y-m-j-siH");
+        $element = $user . "-" . $partie . ".txt";
+        $myfile = fopen($element, "w") or die("Unable to open file!");
 
         $dbsite = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASSWORD);
 
@@ -37,7 +40,7 @@ session_start();
         }
 
         echo '<div class="alert alert--success my5">';
-        echo 'Votre liste de mot de passe <a href="data.txt" target="_blank">a été exportée</a> !';
+        echo 'Votre liste de mot de passe <a href="' . $element . '" target="_blank">a été exportée</a> !';
         echo '</div>';
     } else {
         erreur("Vous n\'êtes pas connecté.");

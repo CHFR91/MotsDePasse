@@ -25,11 +25,17 @@ session_start();
             </dd>
             <dd>- Les choses qui restent à faire (en vert, important et en rouge, secondaire) sur le gestionnaire sont :
                 <ul>
-                    <li class="color-vert">des tests supplémentaires autour du mot de passe "Maître" et mettre en place l'envoie de celui-ci par email.</li>
-                    <li class="color-vert">Git - si c'est applicable !</li>
                     <li class="color-vert">Docker - si c'est applicable !</li>
                     <li class="color-danger">Possibilité de faire un "reset" du mot de passe "Maître"</li>
-                    <li class="color-danger">Création d'une url unique pour chaque utilisateur pour l'exportation de sa liste</li>
+                </ul>
+            </dd>
+            <dd>- Le 1er septembre, les mises à jour sont :
+                <ul>
+                    <li>"MotsDePasse" est disponible sur <a hef="https://github.com/CHFR91/MotsDePasse" target="_blank">Github</a>.</li>
+                    <li>Le programme est développé avec Git même si je trouve cela inutile tout seul.</li>
+                    <li>Personnalisation avec un chemin unique pour toutes les sauvegardes des données.</li>
+                    <li>Correction de deux points au niveau de l'attribution du mot de passe 'Maître' lors de la création d'un compte utilisateur.</li>
+                    <li>Un email est envoyé quand un compte utilisateur est créé (à vérifier en situation réelle).</li>
                 </ul>
             </dd>
         </dl>
@@ -38,7 +44,7 @@ session_start();
 
         <p>Je tiens à préciser que j'ai utilisé pour les feuilles de style (CSS) le framework minimaliste, <a href="https://milligram.io/" target="_blank">Milligram</a> et aussi Milligram Plus (Mg+) dont j'ai récupéré des éléments.</p>
 
-        <p class="color-cinq">Mise à jour du texte de la présentation le 1er septembre 2021</p>
+        <p class="color-cinq">Mise à jour du texte de la présentation le 2 septembre 2021</p>
     </div>
 </main>
 
